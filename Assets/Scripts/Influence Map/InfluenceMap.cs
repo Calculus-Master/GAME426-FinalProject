@@ -8,8 +8,10 @@ using UnityEngine.Serialization;
 public class InfluenceNode
 {
     public Vector2Int location;
+
     // public InfluenceNode parentNode;
     public Dictionary<Influencer, float> influences = new Dictionary<Influencer, float>();
+
     public float totalStrength;
     // public bool visited;
 }
@@ -48,7 +50,7 @@ public class InfluenceMap : MonoBehaviour
     private int gridWidth;
     private int gridHeight;
     //use this instead of the grid. not in map, then influence below strength threshold
-    
+
     private InfluenceNode[,] influenceGrid;
     public float strengthThreshold;
 
@@ -127,35 +129,36 @@ public class InfluenceMap : MonoBehaviour
         var heaps = new List<InfluenceNode>();
         if (location.x > 0)
         {
-            heaps.Add(influenceGrid[location.x-1, location.y]);
+            heaps.Add(influenceGrid[location.x - 1, location.y]);
         }
 
-        if (location.x < gridWidth-1)
+        if (location.x < gridWidth - 1)
         {
-            heaps.Add(influenceGrid[location.x+1, location.y]);
+            heaps.Add(influenceGrid[location.x + 1, location.y]);
         }
 
         if (location.y > 0)
         {
-            heaps.Add(influenceGrid[location.x, location.y-1]);
+            heaps.Add(influenceGrid[location.x, location.y - 1]);
         }
 
         if (location.y < gridHeight - 1)
         {
-            heaps.Add(influenceGrid[location.x, location.y+1]);
+            heaps.Add(influenceGrid[location.x, location.y + 1]);
         }
 
         return heaps;
     }
-    
+
     public float StrengthFunction(Influencer influencer, Vector2Int worldToGrid)
     {
         Vector3Int gridLocation = new Vector3Int(worldToGrid.x, worldToGrid.y, 0);
-        return influencer.GetStrength() / (1 + falloffStrength * Vector3.Distance(influencer.GetLocation(), gridLocation));
+        return influencer.GetStrength() /
+               (1 + falloffStrength * Vector3.Distance(influencer.GetLocation(), gridLocation));
     }
 
     public float falloffStrength = 2f;
-    public GameObject influenceTextPrefab; 
+    public GameObject influenceTextPrefab;
     public bool showInfluenceMap = true;
     public List<Influencer> units = new List<Influencer>();
     private Dictionary<Vector2Int, GameObject> influenceTextObjects = new Dictionary<Vector2Int, GameObject>();
@@ -174,15 +177,25 @@ public class InfluenceMap : MonoBehaviour
         gridHeight = GridMap.Instance.height;
         gridWidth = GridMap.Instance.width;
         units = GridMap.Instance.units;
+        foreach (var unit in units)
+        {
+            if (unit is MovingInfluencerTest test)
+            {
+                test.influenceMap = this;
+            }
+        }
+
+        //sub to moving units
         influenceGrid = new InfluenceNode[gridWidth, gridHeight];
         for (int x = 0; x < gridWidth; x++)
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                influenceGrid[x, y] = new InfluenceNode{ location= new Vector2Int(x, y), totalStrength = 0f};
+                influenceGrid[x, y] = new InfluenceNode { location = new Vector2Int(x, y), totalStrength = 0f };
             }
         }
-        CalculateInfluenceAllUnits();      
+
+        CalculateInfluenceAllUnits();
     }
 
     public void ToggleInfluenceMap()
@@ -219,6 +232,7 @@ public class InfluenceMap : MonoBehaviour
 
     public void UpdateUnitInfluence(Influencer influencer)
     {
+        influencer.ResetInfluences();
         // add unit's new strength 
         HashSet<InfluenceNode> open = new HashSet<InfluenceNode>();
         var loc = GridMap.Instance.WorldToGrid(influencer.transform.position);
@@ -229,47 +243,64 @@ public class InfluenceMap : MonoBehaviour
         while (open.Count > 0)
         {
             current = keys[^1];
-            keys.RemoveAt(keys.Count - 1);   
+            keys.RemoveAt(keys.Count - 1);
             var neighbors = GetNeighbors(current);
             foreach (var neighbor in neighbors)
             {
                 UpdateStrength(influencer, neighbor, open, keys);
             }
+
             open.Remove(current);
-            Debug.Log("hello");
+            // Debug.Log("hello");
         }
     }
 
-    private void UpdateStrength(Influencer influencer, InfluenceNode neighbor, HashSet<InfluenceNode> open, List<InfluenceNode> keys, bool addOpen = true)
+    private void UpdateStrength(Influencer influencer, InfluenceNode neighbor, HashSet<InfluenceNode> open,
+        List<InfluenceNode> keys, bool addOpen = true)
     {
         float strength = StrengthFunction(influencer, neighbor.location);
         bool contains = neighbor.influences.ContainsKey(influencer);
-        if (contains && Mathf.Approximately(strength, neighbor.influences[influencer]))
+        // if (contains && Mathf.Approximately(strength, neighbor.influences[influencer]))
+        // if (contains && Mathf.Approximately(strength, neighbor.influences[influencer]))
+        if ((contains && neighbor.influences[influencer] >= strengthThreshold) || strength < strengthThreshold)
         {
             return;
         }
-        
-        if ( !neighbor.influences.TryAdd(influencer, strength))
+
+        //TODO: update influence in updateunit influence
+        if (!contains)
         {
-            float influence = neighbor.influences[influencer];
-            neighbor.totalStrength -= influence;
-            if (strength < strengthThreshold)
-            {
-                neighbor.influences.Remove(influencer);
-            }
-            else
-            {
-                neighbor.totalStrength += strength;
-            }
+            neighbor.influences.Add(influencer, strength);
         }
         else
         {
-            neighbor.totalStrength += strength;
+            neighbor.influences[influencer] = strength;
         }
+        influencer.influenced.Add(neighbor);
+        neighbor.totalStrength += strength;
+        // if ( !neighbor.influences.TryAdd(influencer, strength))
+        // {
+        //     float influence = neighbor.influences[influencer];
+        //     neighbor.totalStrength -= influence;
+        //     if (strength < strengthThreshold)
+        //     {
+        //         neighbor.influences.Remove(influencer);
+        //     }
+        //     else
+        //     {
+        //         neighbor.influences[influencer] = strength;
+        //         neighbor.totalStrength += strength;
+        //     }
+        // }
+        // else
+        // {
+        //     neighbor.totalStrength += strength;
+        // }
 
-        if (strength >= strengthThreshold && addOpen && open.Add(neighbor))
+        // if (strength >= strengthThreshold && addOpen && open.Add(neighbor))
+        if (addOpen && open.Add(neighbor))
         {
-            keys.Add(neighbor);                    
+            keys.Add(neighbor);
         }
     }
 
@@ -291,13 +322,13 @@ public class InfluenceMap : MonoBehaviour
 
     public float minStrength;
     public float maxStrength;
-    
-    private void UpdateVisualization()
+
+    public void UpdateVisualization()
     {
         if (!showInfluenceMap)
         {
             GridMap.Instance.ResetTileColors(); // reset tile colors if we don't want to show the influence map
-            return; 
+            return;
         }
 
         foreach (var tile in GridMap.Instance.GetTiles())
@@ -305,24 +336,25 @@ public class InfluenceMap : MonoBehaviour
             Vector2Int position = tile.Key;
             if (position.x >= 0 && position.x < gridWidth && position.y >= 0 && position.y < gridHeight)
             {
-                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength, minStrength, maxStrength);
-                float normalizedInfluence = influence/maxStrength;
+                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength, minStrength,
+                    maxStrength);
+                float normalizedInfluence = influence / maxStrength;
                 Color tileColor;
                 if (showInfluenceMap)
                 {
-                    tileColor = Color.Lerp(neutralInfluenceColor,positiveInfluenceColor, normalizedInfluence);
+                    tileColor = Color.Lerp(neutralInfluenceColor, positiveInfluenceColor, normalizedInfluence);
                 }
                 else
                 {
                     tileColor = neutralInfluenceColor;
                 }
+
                 tile.Value.GetComponent<Renderer>().material.color = tileColor;
 
                 // Show 'w' or 'b'
                 // UpdateInfluenceText(position, influence);
             }
         }
-        
     }
 
     private void UpdateInfluenceText(Vector2Int position, float influence)
@@ -333,6 +365,7 @@ public class InfluenceMap : MonoBehaviour
             {
                 obj.SetActive(false);
             }
+
             return;
         }
 
@@ -342,7 +375,8 @@ public class InfluenceMap : MonoBehaviour
 
         if (!influenceTextObjects.ContainsKey(position))
         {
-            GameObject textObj = Instantiate(influenceTextPrefab, GridMap.Instance.GridToWorld(position), Quaternion.identity);
+            GameObject textObj = Instantiate(influenceTextPrefab, GridMap.Instance.GridToWorld(position),
+                Quaternion.identity);
             influenceTextObjects[position] = textObj;
             textObj.transform.SetParent(InfluenceTextParentHolder.transform); // set parent to keep hierarchy clean
         }
@@ -370,7 +404,7 @@ public class InfluenceMap : MonoBehaviour
     private int gridWidth;
     private int gridHeight;
     private float[,] influenceGrid;
-    public GameObject influenceTextPrefab; 
+    public GameObject influenceTextPrefab;
     public bool showInfluenceMap = true;
 
     private Dictionary<Vector2Int, GameObject> influenceTextObjects = new Dictionary<Vector2Int, GameObject>();
@@ -398,7 +432,7 @@ public class InfluenceMap : MonoBehaviour
         gridHeight = GridMap.Instance.height;
         gridWidth = GridMap.Instance.width;
         influenceGrid = new float[gridWidth, gridHeight];
-        CalculateInfluence();      
+        CalculateInfluence();
     }
 
     public void ToggleInfluenceMap()
@@ -417,7 +451,7 @@ public class InfluenceMap : MonoBehaviour
 
     public void CalculateInfluence()
     {
-        
+
         // reset influence grid
         for (int x = 0; x < gridWidth; x++)
         {
@@ -452,7 +486,7 @@ public class InfluenceMap : MonoBehaviour
         if (!showInfluenceMap)
         {
             GridMap.Instance.ResetTileColors(); // reset tile colors if we don't want to show the influence map
-            return; 
+            return;
         }
 
         foreach (var tile in GridMap.Instance.GetTiles())
@@ -477,7 +511,7 @@ public class InfluenceMap : MonoBehaviour
                 UpdateInfluenceText(position, influence);
             }
         }
-        
+
     }
 
     private void UpdateInfluenceText(Vector2Int position, float influence)

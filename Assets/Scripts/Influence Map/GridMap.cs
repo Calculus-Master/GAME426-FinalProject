@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridMap : MonoBehaviour
@@ -14,6 +15,10 @@ public class GridMap : MonoBehaviour
     private GameObject TileParent;
 
 
+    public Vector2Int GetRandomGridLocation()
+    {
+        return gridTiles.Keys.ElementAt(UnityEngine.Random.Range(0, gridTiles.Count));
+    }
     //public GameObject playerPrefab;
     // public GameObject enemyPrefab;
 

@@ -37,7 +37,7 @@ public class SpawnUnits : MonoBehaviour
        
        
         GridMap.Instance.UpdateUnitPosition(spawnPosition, spawnPosition, influencerInstance);
-
+        
         //init ai
 
         influencerInstance.transform.SetParent(UnitParent.transform); // set the parent to TileParent for organization

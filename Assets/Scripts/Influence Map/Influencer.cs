@@ -7,6 +7,19 @@ public class Influencer : MonoBehaviour
 {
     // public Vector2Int gridPosition;
     public float baseStrength;
+
+    public List<InfluenceNode> influenced = new List<InfluenceNode>();
+
+    public void ResetInfluences()
+    {
+        foreach (var influenceNode in influenced)
+        {
+            influenceNode.totalStrength -= influenceNode.influences[this];
+            // influenceNode.influences.Remove(this);
+            influenceNode.influences[this] = 0;
+        }
+        influenced.Clear();
+    }
     // public float playfulness; //could put in sub class pet
     // public float happiness;
     // private float rechargingPlayfulness;
@@ -26,6 +39,7 @@ public class Influencer : MonoBehaviour
         Vector3 location = new Vector3(gl.x, gl.y, 0f);
         return location;
     }
+
     public float GetStrength()
     {
         return baseStrength;
