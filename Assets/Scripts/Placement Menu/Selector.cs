@@ -74,7 +74,7 @@ public class Selector : MonoBehaviour
             }
             else if(hit.collider && hit.collider.gameObject.layer == canRemoveLayer)
             {
-                Destroy(hit.collider.gameObject);
+                Destroy(hit.collider.transform.root.gameObject);
             }
             else
             {
@@ -129,6 +129,7 @@ public class Selector : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && preview)
             {
                 var spawned = Instantiate(selected.prefab, spawnLoc, spawnRot);
+                spawned.gameObject.layer = canRemoveLayer;
                 foreach (Transform child in spawned.transform)
                 {
                     child.gameObject.layer = canRemoveLayer;
