@@ -50,6 +50,10 @@ public class PetEntity : MonoBehaviour
     public float Hunger() => this._hunger;
     public float Thirst() => this._thirst;
     public float EnergyLevel() => this._energyLevel;
+
+    public void Eat() => this._hunger = 1.0F;
+    public void Drink() => this._thirst = 1.0F;
+    public void Sleep() => this._energyLevel = 1.0F;
 }
 
 [Serializable]

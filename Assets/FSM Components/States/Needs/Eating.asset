@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Eating
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
-  stateActions: []
+  stateActions:
+  - {fileID: 11400000, guid: 59c48186a852f49d692db24f2ac744a9, type: 2}
   exitAction: {fileID: 0}
   transitions:
   - {fileID: 11400000, guid: 04d748a6dd60e4f4b8f502cb6abb12f8, type: 2}

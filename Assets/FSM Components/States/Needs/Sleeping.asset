@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sleeping
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
-  stateActions: []
+  stateActions:
+  - {fileID: 11400000, guid: 4658d4c46c2dc4950a75ac723115936b, type: 2}
   exitAction: {fileID: 0}
   transitions:
   - {fileID: 11400000, guid: 7fa167a9c6e7c4d84b296d4844da4927, type: 2}

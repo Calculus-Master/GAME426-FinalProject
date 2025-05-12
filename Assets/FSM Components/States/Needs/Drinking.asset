@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Drinking
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
-  stateActions: []
+  stateActions:
+  - {fileID: 11400000, guid: 1d4c29ae714b04eb2bbe1c5101a45860, type: 2}
   exitAction: {fileID: 0}
   transitions:
   - {fileID: 11400000, guid: d5c23dacf5f2a485693d75f102188c08, type: 2}
