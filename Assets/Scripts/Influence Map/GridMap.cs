@@ -52,6 +52,7 @@ public class GridMap : MonoBehaviour
             {
                 Vector2Int gridPos = new Vector2Int(x, y);
                 GameObject tile = Instantiate(tilePrefab, GridToWorld(gridPos), Quaternion.identity);
+                tile.layer = LayerMask.NameToLayer("canPlace");
                 gridTiles[gridPos] = tile;
                 tile.transform.parent = TileParent.transform; // Set the parent to TileParent
             }

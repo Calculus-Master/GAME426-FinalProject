@@ -111,8 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb308e842a498c479999fe5a8cb600f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myLayer: 0
   baseStrength: 1
-  baseHappiness: 1
+  baseHappiness: 3
 --- !u!1 &6237254071545606315
 GameObject:
   m_ObjectHideFlags: 0

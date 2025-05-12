@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Influencer : MonoBehaviour
 {
+    public InfluenceLayers myLayer;
     // public Vector2Int gridPosition;
     public float baseStrength;
 
@@ -14,7 +15,8 @@ public class Influencer : MonoBehaviour
     {
         foreach (var influenceNode in influenced)
         {
-            influenceNode.totalStrength -= influenceNode.influences[this];
+            // influenceNode.totalStrength -= influenceNode.influences[this];
+            influenceNode.UpdateStrength(myLayer, -influenceNode.influences[this]);
             // influenceNode.influences.Remove(this);
             influenceNode.influences[this] = 0;
         }

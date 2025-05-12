@@ -22,7 +22,8 @@ public class Selector : MonoBehaviour
     public float selectionDistance = Mathf.Infinity;
     public float spawnDistance = 2f;
     public float smallOffset = 0.005f;
-
+    public InfluenceMap influenceMap;
+    
     private void UpdateMaterial(Transform go, Material mat)
     {
         go.GetComponent<Renderer>().material = mat;
@@ -74,6 +75,11 @@ public class Selector : MonoBehaviour
             }
             else if(hit.collider && hit.collider.gameObject.layer == canRemoveLayer)
             {
+                Influencer influencer = hit.collider.gameObject.GetComponent<Influencer>();
+                if (influencer)
+                {
+                    influenceMap.RemoveInfluencer(influencer);
+                }
                 Destroy(hit.collider.transform.root.gameObject);
             }
             else
@@ -99,10 +105,11 @@ public class Selector : MonoBehaviour
                 }
                 preview.transform.rotation = spawnRot;
                 // preview.transform.position = spawnLoc;
+                //using a temp game object to use collider measurements. wouldn't work if using preview's for some reason
                 measurement.transform.rotation = spawnRot;
                 measurement.transform.position = spawnLoc;
                 measurement.SetActive(true);
-                spawnLoc += hit.point - measureCollider.ClosestPointOnBounds(hit.point) + hit.normal*smallOffset; //TODO: use a third object for the raycast test and toggle active everytime
+                spawnLoc += hit.point - measureCollider.ClosestPointOnBounds(hit.point) + hit.normal*smallOffset; 
                 measurement.SetActive(false);
                 preview.transform.position = spawnLoc;
                 // Debug.Log($"closest on bounds: {previewCollider.ClosestPointOnBounds(hit.point)}. spawnLoc: {spawnLoc}. hitpoint: {hit.point}");
@@ -129,6 +136,7 @@ public class Selector : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && preview)
             {
                 var spawned = Instantiate(selected.prefab, spawnLoc, spawnRot);
+                influenceMap.AddInfluencer(spawned.GetComponent<Influencer>());
                 spawned.gameObject.layer = canRemoveLayer;
                 foreach (Transform child in spawned.transform)
                 {

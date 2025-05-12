@@ -5,6 +5,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum InfluenceLayers
+{
+    HAPPINESS, 
+    PLAYFULNESS,
+    AFFINITY
+}
+
 public class InfluenceNode
 {
     public Vector2Int location;
@@ -12,7 +19,31 @@ public class InfluenceNode
     // public InfluenceNode parentNode;
     public Dictionary<Influencer, float> influences = new Dictionary<Influencer, float>();
 
-    public float totalStrength;
+    // public float totalStrength; //TODO: add layers by making totalStrength private and getting it based on layer key
+    public Dictionary<InfluenceLayers, float> totalStrength = new Dictionary<InfluenceLayers, float>();
+
+    public InfluenceNode(Vector2Int location)
+    {
+        this.location = location;
+        Initialize();
+    }
+    public void Initialize()
+    {
+        foreach (var layer in Enum.GetValues(typeof(InfluenceLayers)))
+        {
+            totalStrength.Add((InfluenceLayers)layer, 0);
+        }
+    }
+
+    public float GetStrength(InfluenceLayers layer)
+    {
+        return totalStrength[layer];
+    }
+
+    public void UpdateStrength(InfluenceLayers layer, float strength)
+    {
+        totalStrength[layer] += strength;
+    }
     // public bool visited;
 }
 
@@ -157,20 +188,30 @@ public class InfluenceMap : MonoBehaviour
                (1 + falloffStrength * Vector3.Distance(influencer.GetLocation(), gridLocation));
     }
 
+    public void AddInfluencer(Influencer influencer)
+    {
+        units.Add(influencer);
+        UpdateUnitInfluence(influencer);
+        UpdateVisualization();
+
+    }
+
+    public void RemoveInfluencer(Influencer influencer)
+    {
+        influencer.ResetInfluences();
+        units.Remove(influencer);
+        UpdateVisualization();
+
+    }
+    
     public float falloffStrength = 2f;
     public GameObject influenceTextPrefab;
     public bool showInfluenceMap = true;
     public List<Influencer> units = new List<Influencer>();
-    private Dictionary<Vector2Int, GameObject> influenceTextObjects = new Dictionary<Vector2Int, GameObject>();
     public Color positiveInfluenceColor = Color.green;
     public Color neutralInfluenceColor = Color.grey;
 
     private GameObject InfluenceTextParentHolder;
-
-    private void Awake()
-    {
-        InfluenceTextParentHolder = new GameObject("InfluenceTextParentHolder");
-    }
 
     private void Start()
     {
@@ -191,7 +232,7 @@ public class InfluenceMap : MonoBehaviour
         {
             for (int y = 0; y < gridHeight; y++)
             {
-                influenceGrid[x, y] = new InfluenceNode { location = new Vector2Int(x, y), totalStrength = 0f };
+                influenceGrid[x, y] = new InfluenceNode  (new Vector2Int(x, y))/*, totalStrength = 0f }*/;
             }
         }
 
@@ -212,23 +253,23 @@ public class InfluenceMap : MonoBehaviour
         }
     }
 
-    public int CompareInfluenceNodes(InfluenceNode t1, InfluenceNode t2)
-    {
-        float diff = t1.totalStrength - t2.totalStrength;
-        if (Mathf.Approximately(diff, 0))
-        {
-            return 0;
-        }
-
-        if (diff > 0f)
-        {
-            return 1;
-        }
-        else
-        {
-            return -1;
-        }
-    }
+    // public int CompareInfluenceNodes(InfluenceNode t1, InfluenceNode t2)
+    // {
+    //     float diff = t1.totalStrength - t2.totalStrength;
+    //     if (Mathf.Approximately(diff, 0))
+    //     {
+    //         return 0;
+    //     }
+    //
+    //     if (diff > 0f)
+    //     {
+    //         return 1;
+    //     }
+    //     else
+    //     {
+    //         return -1;
+    //     }
+    // }
 
     public void UpdateUnitInfluence(Influencer influencer)
     {
@@ -277,27 +318,8 @@ public class InfluenceMap : MonoBehaviour
             neighbor.influences[influencer] = strength;
         }
         influencer.influenced.Add(neighbor);
-        neighbor.totalStrength += strength;
-        // if ( !neighbor.influences.TryAdd(influencer, strength))
-        // {
-        //     float influence = neighbor.influences[influencer];
-        //     neighbor.totalStrength -= influence;
-        //     if (strength < strengthThreshold)
-        //     {
-        //         neighbor.influences.Remove(influencer);
-        //     }
-        //     else
-        //     {
-        //         neighbor.influences[influencer] = strength;
-        //         neighbor.totalStrength += strength;
-        //     }
-        // }
-        // else
-        // {
-        //     neighbor.totalStrength += strength;
-        // }
-
-        // if (strength >= strengthThreshold && addOpen && open.Add(neighbor))
+        // neighbor.totalStrength += strength;
+        neighbor.UpdateStrength(influencer.myLayer, strength);
         if (addOpen && open.Add(neighbor))
         {
             keys.Add(neighbor);
@@ -313,13 +335,7 @@ public class InfluenceMap : MonoBehaviour
 
         UpdateVisualization();
     }
-    //
-    // private void ApplyInfluence(Vector2Int position)
-    // {
-    //     //TODO: apply influence to the tiles
-    //     // Make sure to update these influences in the influenceGrid
-    // }
-
+   
     public float minStrength;
     public float maxStrength;
 
@@ -336,7 +352,7 @@ public class InfluenceMap : MonoBehaviour
             Vector2Int position = tile.Key;
             if (position.x >= 0 && position.x < gridWidth && position.y >= 0 && position.y < gridHeight)
             {
-                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength, minStrength,
+                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength[InfluenceLayers.HAPPINESS], minStrength,
                     maxStrength);
                 float normalizedInfluence = influence / maxStrength;
                 Color tileColor;
@@ -356,197 +372,13 @@ public class InfluenceMap : MonoBehaviour
             }
         }
     }
-
-    private void UpdateInfluenceText(Vector2Int position, float influence)
-    {
-        if (!showInfluenceMap)
-        {
-            foreach (var obj in influenceTextObjects.Values)
-            {
-                obj.SetActive(false);
-            }
-
-            return;
-        }
-
-        string symbol = "";
-        if (influence > 2) symbol = "W"; // player has advantage
-        else if (influence < -2) symbol = "B"; // enemy has advantage
-
-        if (!influenceTextObjects.ContainsKey(position))
-        {
-            GameObject textObj = Instantiate(influenceTextPrefab, GridMap.Instance.GridToWorld(position),
-                Quaternion.identity);
-            influenceTextObjects[position] = textObj;
-            textObj.transform.SetParent(InfluenceTextParentHolder.transform); // set parent to keep hierarchy clean
-        }
-
-        influenceTextObjects[position].GetComponent<TextMeshPro>().text = symbol;
-        influenceTextObjects[position].SetActive(!string.IsNullOrEmpty(symbol));
-    }
-
-    public float GetInfluenceAt(Vector3 pos)
+    
+    public float GetInfluenceAt(InfluenceLayers layer, Vector3 pos)
     {
         Vector2Int position = GridMap.Instance.WorldToGrid(pos);
         if (position.x < 0 || position.x >= gridWidth || position.y < 0 || position.y >= gridHeight)
             return 0;
-        return influenceGrid[position.x, position.y].totalStrength;
+        return influenceGrid[position.x, position.y].totalStrength[layer];
     }
 }
 
-/*
-using UnityEngine;
-using System.Collections.Generic;
-using TMPro;
-
-public class InfluenceMap : MonoBehaviour
-{
-    public static InfluenceMap Instance;
-    private int gridWidth;
-    private int gridHeight;
-    private float[,] influenceGrid;
-    public GameObject influenceTextPrefab;
-    public bool showInfluenceMap = true;
-
-    private Dictionary<Vector2Int, GameObject> influenceTextObjects = new Dictionary<Vector2Int, GameObject>();
-
-
-    private GameObject InfluenceTextParentHolder;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        InfluenceTextParentHolder = new GameObject("InfluenceTextParentHolder");
-
-    }
-
-    private void Start()
-    {
-        gridHeight = GridMap.Instance.height;
-        gridWidth = GridMap.Instance.width;
-        influenceGrid = new float[gridWidth, gridHeight];
-        CalculateInfluence();
-    }
-
-    public void ToggleInfluenceMap()
-    {
-        showInfluenceMap = !showInfluenceMap;
-        CalculateInfluence();
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ToggleInfluenceMap();
-        }
-    }
-
-    public void CalculateInfluence()
-    {
-
-        // reset influence grid
-        for (int x = 0; x < gridWidth; x++)
-        {
-            for (int y = 0; y < gridHeight; y++)
-            {
-                influenceGrid[x, y] = 0;
-            }
-        }
-
-        // apply influence from all units
-        foreach (Unit unit in TurnManager.Instance.playerUnits)
-        {
-            ApplyInfluence(unit.gridPosition, 10); // positive influence for player
-        }
-
-        foreach (Unit unit in TurnManager.Instance.enemyUnits)
-        {
-            ApplyInfluence(unit.gridPosition, -10); // negative influence for enemy
-        }
-
-        UpdateVisualization();
-    }
-
-    private void ApplyInfluence(Vector2Int position, float baseInfluence)
-    {
-        //TODO: apply influence to the tiles
-        // Make sure to update these influences in the influenceGrid
-    }
-
-    private void UpdateVisualization()
-    {
-        if (!showInfluenceMap)
-        {
-            GridMap.Instance.ResetTileColors(); // reset tile colors if we don't want to show the influence map
-            return;
-        }
-
-        foreach (var tile in GridMap.Instance.GetTiles())
-        {
-            Vector2Int position = tile.Key;
-            if (position.x >= 0 && position.x < gridWidth && position.y >= 0 && position.y < gridHeight)
-            {
-                float influence = Mathf.Clamp(influenceGrid[position.x, position.y], -10f, 10f);
-                float normalizedInfluence = (influence + 10f) / 20f;
-                Color tileColor;
-                if (showInfluenceMap)
-                {
-                    tileColor = Color.Lerp(Color.black, Color.white, normalizedInfluence);
-                }
-                else
-                {
-                    tileColor = Color.white;
-                }
-                tile.Value.GetComponent<SpriteRenderer>().color = tileColor;
-
-                // Show 'w' or 'b'
-                UpdateInfluenceText(position, influence);
-            }
-        }
-
-    }
-
-    private void UpdateInfluenceText(Vector2Int position, float influence)
-    {
-        if (!showInfluenceMap)
-        {
-            foreach (var obj in influenceTextObjects.Values)
-            {
-                obj.SetActive(false);
-            }
-            return;
-        }
-
-        string symbol = "";
-        if (influence > 2) symbol = "W"; // player has advantage
-        else if (influence < -2) symbol = "B"; // enemy has advantage
-
-        if (!influenceTextObjects.ContainsKey(position))
-        {
-            GameObject textObj = Instantiate(influenceTextPrefab, GridMap.Instance.GridToWorld(position), Quaternion.identity);
-            influenceTextObjects[position] = textObj;
-            textObj.transform.SetParent(InfluenceTextParentHolder.transform); // set parent to keep hierarchy clean
-        }
-
-        influenceTextObjects[position].GetComponent<TextMeshPro>().text = symbol;
-        influenceTextObjects[position].SetActive(!string.IsNullOrEmpty(symbol));
-    }
-
-    public float GetInfluenceAt(Vector2Int position)
-    {
-        if (position.x < 0 || position.x >= gridWidth || position.y < 0 || position.y >= gridHeight)
-            return 0;
-        return influenceGrid[position.x, position.y];
-    }
-}
-
-*/
