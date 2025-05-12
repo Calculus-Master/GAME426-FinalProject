@@ -40,7 +40,7 @@ public class Influencer : MonoBehaviour
         return location;
     }
 
-    public float GetStrength()
+    public virtual float GetStrength()
     {
         return baseStrength;
     }
