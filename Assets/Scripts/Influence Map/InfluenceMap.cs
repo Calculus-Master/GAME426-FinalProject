@@ -385,8 +385,9 @@ public class InfluenceMap : MonoBehaviour
         influenceTextObjects[position].SetActive(!string.IsNullOrEmpty(symbol));
     }
 
-    public float GetInfluenceAt(Vector2Int position)
+    public float GetInfluenceAt(Vector3 pos)
     {
+        Vector2Int position = GridMap.Instance.WorldToGrid(pos);
         if (position.x < 0 || position.x >= gridWidth || position.y < 0 || position.y >= gridHeight)
             return 0;
         return influenceGrid[position.x, position.y].totalStrength;
