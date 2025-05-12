@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075c790b3795413f801dd749793c215, type: 3}
-  m_Name: Eating
+  m_Script: {fileID: 11500000, guid: d8049c1f8c0441db82dcb02b8586ed17, type: 3}
+  m_Name: Is Thirsty
   m_EditorClassIdentifier: 
-  entryAction: {fileID: 0}
-  stateActions: []
-  exitAction: {fileID: 0}
-  transitions: []
+  testForThirsty: 1

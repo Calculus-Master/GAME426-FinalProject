@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075c790b3795413f801dd749793c215, type: 3}
-  m_Name: Idle
+  m_Script: {fileID: 11500000, guid: 1719cf8babc6044adb7a9d3e75aa6a51, type: 3}
+  m_Name: Is Not Hungry
   m_EditorClassIdentifier: 
-  entryAction: {fileID: 0}
-  stateActions: []
-  exitAction: {fileID: 0}
-  transitions: []
+  testForHungry: 0

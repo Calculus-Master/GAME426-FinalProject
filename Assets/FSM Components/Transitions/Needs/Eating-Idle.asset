@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d041b002376446c5bb45b8568a93bf9, type: 3}
-  m_Name: Leisure (Super State)
+  m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
+  m_Name: Eating-Idle
   m_EditorClassIdentifier: 
-  entryAction: {fileID: 0}
-  stateActions: []
-  exitAction: {fileID: 0}
-  transitions: []
-  initialSubState: {fileID: 0}
-  currentSubState: {fileID: 0}
+  condition: {fileID: 11400000, guid: ff0f394850dc44e6caa0636658d4772f, type: 2}
+  action: {fileID: 0}
+  targetState: {fileID: 11400000, guid: aee845daa3058471daa2aacf51253897, type: 2}

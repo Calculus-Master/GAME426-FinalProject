@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e075c790b3795413f801dd749793c215, type: 3}
-  m_Name: Drinking
+  m_Name: Needs Idle
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
   stateActions: []
   exitAction: {fileID: 0}
-  transitions: []
+  transitions:
+  - {fileID: 11400000, guid: 719899a8d99754e08ae2327f6f969c5d, type: 2}
+  - {fileID: 11400000, guid: 22dfbce3d2ad24dd8bb8b4730a5ac81f, type: 2}
+  - {fileID: 11400000, guid: c47e33fc6574842368f965cb63601923, type: 2}

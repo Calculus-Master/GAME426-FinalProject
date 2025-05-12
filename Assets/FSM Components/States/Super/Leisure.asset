@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d041b002376446c5bb45b8568a93bf9, type: 3}
+  m_Name: Leisure
+  m_EditorClassIdentifier: 
+  entryAction: {fileID: 0}
+  stateActions: []
+  exitAction: {fileID: 0}
+  transitions:
+  - {fileID: 11400000, guid: 517c6d38959af4282b61c014c8a0c0eb, type: 2}
+  initialSubState: {fileID: 11400000, guid: 6d0a9fbf7a9f844519c6a20a133d308f, type: 2}
+  currentSubState: {fileID: 11400000, guid: 6d0a9fbf7a9f844519c6a20a133d308f, type: 2}

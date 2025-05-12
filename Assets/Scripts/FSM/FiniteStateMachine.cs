@@ -11,10 +11,14 @@ public class FiniteStateMachine : MonoBehaviour
 {
     public FSMState initialState;
     public FSMState currentState;
+    
+    private PetEntity petEntity;
 
     private void Start()
     {
         this.currentState = this.initialState;
+
+        this.petEntity = this.GetComponent<PetEntity>();
         
         this.LogState();
     }
@@ -66,4 +70,6 @@ public class FiniteStateMachine : MonoBehaviour
         string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.currentSubState.name})" : "";
         Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
     }
+
+    public PetEntity GetPet() => this.petEntity;
 }

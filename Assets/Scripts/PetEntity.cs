@@ -2,14 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PetEntity : MonoBehaviour
 {
-    [Header("Pet Needs")] 
+    [Header("Pet Needs Decay")] 
     [Tooltip("How often needs will decay, in seconds")] public float needsDecayInterval = 1F;
-    public float hungerDecayRate = 0.1F;
-    public float thirstDecayRate = 0.1F;
+    public float hungerDecayRate = 0.15F;
+    public float thirstDecayRate = 0.05F;
     public float energyDecayRate = 0.1F;
+
+    [Header("Pet Needs Thresholds")] 
+    [Tooltip("Values where the pet feels hungry and full")]
+    public NeedsThreshold HungerThresholds = new(0.2F, 0.8F);
+    [Tooltip("Values where the pet feels thirsty and not")] 
+    public NeedsThreshold ThirstThresholds = new(0.1F, 0.8F);
+    [Tooltip("Values where the pet feels tired and energetic")] 
+    public NeedsThreshold EnergyThresholds = new(0.2F, 0.8F);
     
     private float _hunger;
     private float _thirst;
@@ -36,5 +45,22 @@ public class PetEntity : MonoBehaviour
             if(this._thirst > 0) this._thirst -= this.thirstDecayRate;
             if(this._energyLevel > 0) this._energyLevel -= this.energyDecayRate;
         }
+    }
+
+    public float Hunger() => this._hunger;
+    public float Thirst() => this._thirst;
+    public float EnergyLevel() => this._energyLevel;
+}
+
+[Serializable]
+public struct NeedsThreshold
+{
+    public float lower;
+    public float upper;
+
+    public NeedsThreshold(float lower, float upper)
+    {
+        this.lower = lower;
+        this.upper = upper;
     }
 }
