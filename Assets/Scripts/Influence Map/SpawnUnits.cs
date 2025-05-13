@@ -30,7 +30,8 @@ public class SpawnUnits : MonoBehaviour
     {
         var gridToWorld = GridMap.Instance.GridToWorld(spawnPosition);
         Vector3 worldPosition = gridToWorld;
-        worldPosition.z = -1;
+        // worldPosition.z = -1;
+        worldPosition.y = 1f;
         Influencer influencerInstance = Instantiate(influencerPrefab, worldPosition, Quaternion.identity);
         // InfluenceMap.Instance.units.Add(unitInstance);
        //init unit

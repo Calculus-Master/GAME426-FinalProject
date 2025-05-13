@@ -75,7 +75,7 @@ public class Selector : MonoBehaviour
             }
             else if(hit.collider && hit.collider.gameObject.layer == canRemoveLayer)
             {
-                Influencer influencer = hit.collider.gameObject.GetComponent<Influencer>();
+                Influencer influencer = hit.collider.transform.root.gameObject.GetComponent<Influencer>();
                 if (influencer)
                 {
                     influenceMap.RemoveInfluencer(influencer);

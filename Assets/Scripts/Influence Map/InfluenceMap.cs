@@ -201,7 +201,6 @@ public class InfluenceMap : MonoBehaviour
         influencer.ResetInfluences();
         units.Remove(influencer);
         UpdateVisualization();
-
     }
     
     public float falloffStrength = 2f;

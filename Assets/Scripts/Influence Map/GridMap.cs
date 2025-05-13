@@ -66,7 +66,7 @@ public class GridMap : MonoBehaviour
         worldPosition.x -= Mathf.RoundToInt(transform.position.x);
         worldPosition.z -= Mathf.RoundToInt(transform.position.z);
         return new Vector2Int(Mathf.RoundToInt(worldPosition.x / cellSize),
-            Mathf.RoundToInt(worldPosition.y / cellSize));
+            Mathf.RoundToInt(worldPosition.z / cellSize));
     }
 
     public Vector3 GridToWorld(Vector2Int gridPosition)

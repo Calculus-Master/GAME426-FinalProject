@@ -14,7 +14,8 @@ public class MovingInfluencerTest : Influencer
     private void MoveToRandom()
     {
         destination = GridMap.Instance.GridToWorld(GridMap.Instance.GetRandomGridLocation());
-        destination.z = transform.position.z;
+        destination.y = transform.position.y;
+        // destination.z = transform.position.z;
     }
     
     private void Start()
