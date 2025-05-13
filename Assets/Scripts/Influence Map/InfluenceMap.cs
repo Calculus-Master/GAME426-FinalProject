@@ -226,7 +226,6 @@ public class InfluenceMap : MonoBehaviour
             }
         }
 
-        //sub to moving units
         influenceGrid = new InfluenceNode[gridWidth, gridHeight];
         for (int x = 0; x < gridWidth; x++)
         {

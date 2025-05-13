@@ -8,7 +8,7 @@ public class GridMap : MonoBehaviour
     public static GridMap Instance;
     public int width = 20;
     public int height = 20;
-    public List<Influencer> units;
+    public List<Influencer> units = new List<Influencer>();
     public float cellSize = 1.0f;
     public GameObject tilePrefab;
     private Dictionary<Vector2Int, GameObject> gridTiles = new Dictionary<Vector2Int, GameObject>();
@@ -50,8 +50,10 @@ public class GridMap : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
+                // Vector2Int gridPos = new Vector2Int(x, y);
                 Vector2Int gridPos = new Vector2Int(x, y);
                 GameObject tile = Instantiate(tilePrefab, GridToWorld(gridPos), Quaternion.identity);
+                tile.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
                 tile.layer = LayerMask.NameToLayer("canPlace");
                 gridTiles[gridPos] = tile;
                 tile.transform.parent = TileParent.transform; // Set the parent to TileParent
@@ -61,13 +63,16 @@ public class GridMap : MonoBehaviour
 
     public Vector2Int WorldToGrid(Vector3 worldPosition)
     {
+        worldPosition.x -= Mathf.RoundToInt(transform.position.x);
+        worldPosition.z -= Mathf.RoundToInt(transform.position.z);
         return new Vector2Int(Mathf.RoundToInt(worldPosition.x / cellSize),
             Mathf.RoundToInt(worldPosition.y / cellSize));
     }
 
     public Vector3 GridToWorld(Vector2Int gridPosition)
     {
-        return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize, 0);
+        // return new Vector3(gridPosition.x * cellSize, gridPosition.y * cellSize, 0);
+        return new Vector3(Mathf.RoundToInt(transform.position.x) + gridPosition.x * cellSize, transform.position.y, Mathf.RoundToInt(transform.position.z) + gridPosition.y * cellSize);
     }
 
     public bool IsValidTile(Vector2Int position)
@@ -121,7 +126,10 @@ public class GridMap : MonoBehaviour
     
     public void SpawnUnits()
     {
-        units = spawnUnits.SpawnAllUnits();
+        if (spawnUnits)
+        {
+            units = spawnUnits.SpawnAllUnits();
+        }
     }
 }
 /*
