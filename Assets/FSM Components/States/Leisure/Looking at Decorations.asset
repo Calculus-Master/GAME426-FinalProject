@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Looking at Decorations
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
-  stateActions: []
+  stateActions:
+  - {fileID: 11400000, guid: ad79489f59a2c4a8d94d26a94746a419, type: 2}
   exitAction: {fileID: 0}
   transitions:
   - {fileID: 11400000, guid: 2bb1903750371448bb4f60e7666f7e3c, type: 2}

@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petType: {fileID: 11400000, guid: 62439735515a0428daf5b3bdcbecd77f, type: 2}
-  needsDecayInterval: 1
+  needsDecayInterval: 5
   hungerDecayRate: 0.1
   thirstDecayRate: 0.1
   energyDecayRate: 0.1
@@ -153,5 +153,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 3
-  baseStrength: 1
+  baseStrength: 4
   isMoving: 1

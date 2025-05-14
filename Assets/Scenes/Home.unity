@@ -400,22 +400,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1757397202}
     m_Modifications:
-    - target: {fileID: -6583501378290063763, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
-      propertyPath: isMoving
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6583501378290063763, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
-      propertyPath: baseStrength
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 877238653693914342, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_Name
-      value: AIPet
+      value: Pet A
       objectReference: {fileID: 0}
     - target: {fileID: 877238653693914342, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4932524673804431789, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
+      propertyPath: petType
+      value: 
+      objectReference: {fileID: 11400000, guid: cc301235eca0b4ae9813f2a0ab8c39e7, type: 2}
     - target: {fileID: 4932524673804431789, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: energyDecayRate
       value: 0.07
@@ -434,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3842773
+      value: 0.87
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.y
@@ -442,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0342407
+      value: -0.22
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1199,7 +1195,7 @@ Transform:
   - {fileID: 1463944501}
   - {fileID: 17785991}
   m_Father: {fileID: 1905124332}
-  m_RootOrder: 12
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505262658 stripped
 GameObject:
@@ -1291,7 +1287,7 @@ Transform:
   - {fileID: 768105997}
   - {fileID: 1450591773}
   m_Father: {fileID: 1905124332}
-  m_RootOrder: 7
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &660132632 stripped
 Transform:
@@ -2221,7 +2217,7 @@ MonoBehaviour:
   influenceTextPrefab: {fileID: 8463576709774129551, guid: f6b3eb6ba60305a46b2c28a8b725d9ff, type: 3}
   showInfluenceMap: 1
   units: []
-  visualizationLayer: 2
+  visualizationLayer: 3
   positiveInfluenceColor: {r: 0, g: 1, b: 0, a: 1}
   neutralInfluenceColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   minStrength: 0
@@ -4076,17 +4072,17 @@ Transform:
   m_Children:
   - {fileID: 1531565840}
   - {fileID: 613776471}
+  - {fileID: 647628405}
+  - {fileID: 428785132}
   - {fileID: 1091386801}
   - {fileID: 906690837}
   - {fileID: 841526079}
   - {fileID: 1401489972}
   - {fileID: 867770250}
-  - {fileID: 647628405}
   - {fileID: 1597465015}
   - {fileID: 660132632}
   - {fileID: 30159759}
   - {fileID: 199030751}
-  - {fileID: 428785132}
   - {fileID: 995650044}
   - {fileID: 740377203}
   - {fileID: 568688629}
@@ -4521,12 +4517,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 877238653693914342, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_Name
-      value: AIPet
+      value: Pet B
       objectReference: {fileID: 0}
     - target: {fileID: 877238653693914342, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4932524673804431789, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
+      propertyPath: petType
+      value: 
+      objectReference: {fileID: 11400000, guid: 31406d6558425487bad40d26d57050fb, type: 2}
     - target: {fileID: 4932524673804431789, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: energyDecayRate
       value: 0.07
@@ -4539,13 +4539,17 @@ PrefabInstance:
       propertyPath: thirstDecayRate
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 4932524673804431789, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
+      propertyPath: needsDecayInterval
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.497
+      value: -1.74
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4553,7 +4557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.36
+      value: -0.47
       objectReference: {fileID: 0}
     - target: {fileID: 5373841451652060190, guid: 48fba8ebe396c4f1ca164c468b388f54, type: 3}
       propertyPath: m_LocalRotation.w

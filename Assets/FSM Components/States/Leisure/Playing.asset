@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Playing
   m_EditorClassIdentifier: 
   entryAction: {fileID: 0}
-  stateActions: []
+  stateActions:
+  - {fileID: 11400000, guid: 5a3a4a167bbaf437fae7fa68561a3eb2, type: 2}
   exitAction: {fileID: 0}
   transitions:
   - {fileID: 11400000, guid: 817f86513aba24a999ba8f3f3959c2d1, type: 2}
