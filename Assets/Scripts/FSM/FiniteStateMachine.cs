@@ -13,12 +13,14 @@ public class FiniteStateMachine : MonoBehaviour
     public FSMState currentState;
     
     private PetEntity petEntity;
+    private InfluenceMap influenceMap;
 
     private void Start()
     {
         this.currentState = this.initialState;
 
         this.petEntity = this.GetComponent<PetEntity>();
+        this.influenceMap = FindObjectOfType<InfluenceMap>();
         
         this.LogState();
     }
@@ -72,4 +74,5 @@ public class FiniteStateMachine : MonoBehaviour
     }
 
     public PetEntity GetPet() => this.petEntity;
+    public InfluenceMap GetInfluenceMap() => this.influenceMap;
 }

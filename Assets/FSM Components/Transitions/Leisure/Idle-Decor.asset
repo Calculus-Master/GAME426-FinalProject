@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
+  m_Name: Idle-Decor
+  m_EditorClassIdentifier: 
+  condition: {fileID: 11400000, guid: 66aad5ce998a145889f6117f43eb426c, type: 2}
+  action: {fileID: 0}
+  targetState: {fileID: 11400000, guid: 35b47306d76374e97afa81eaf02ab91e, type: 2}

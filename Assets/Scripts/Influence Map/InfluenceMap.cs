@@ -8,7 +8,9 @@ using UnityEngine.Serialization;
 public enum InfluenceLayers
 {
     HAPPINESS, 
-    PLAYFULNESS,
+    PLAYFULNESS, // Exerted by toys
+    DECOR, // Exerted by decoration items
+    POSITION, // Exerted by the position of the pet (used for socializing)
     AFFINITY
 }
 
@@ -350,7 +352,7 @@ public class InfluenceMap : MonoBehaviour
             Vector2Int position = tile.Key;
             if (position.x >= 0 && position.x < gridWidth && position.y >= 0 && position.y < gridHeight)
             {
-                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength[InfluenceLayers.HAPPINESS], minStrength,
+                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength[InfluenceLayers.POSITION], minStrength,
                     maxStrength);
                 float normalizedInfluence = influence / maxStrength;
                 Color tileColor;

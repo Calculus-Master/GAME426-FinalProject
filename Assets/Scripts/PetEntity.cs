@@ -6,6 +6,9 @@ using UnityEngine.Serialization;
 
 public class PetEntity : MonoBehaviour
 {
+    [Header("Pet Type")] 
+    public ActivityWeights petType;
+    
     [Header("Pet Needs Decay")] 
     [Tooltip("How often needs will decay, in seconds")] public float needsDecayInterval = 1F;
     public float hungerDecayRate = 0.15F;

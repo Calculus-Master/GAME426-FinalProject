@@ -112,10 +112,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8264a4f2337dc4113b9338d354e95645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  petType: {fileID: 11400000, guid: 62439735515a0428daf5b3bdcbecd77f, type: 2}
   needsDecayInterval: 1
   hungerDecayRate: 0.1
   thirstDecayRate: 0.1
   energyDecayRate: 0.1
+  HungerThresholds:
+    lower: 0.2
+    upper: 0.8
+  ThirstThresholds:
+    lower: 0.1
+    upper: 0.8
+  EnergyThresholds:
+    lower: 0.2
+    upper: 0.8
 --- !u!114 &9014348102079539269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,4 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e2b87dd58e62a54f887ddbcc595cdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStrength: 3
+  myLayer: 3
+  baseStrength: 1
+  isMoving: 1
