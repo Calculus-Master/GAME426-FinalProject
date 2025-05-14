@@ -209,6 +209,7 @@ public class InfluenceMap : MonoBehaviour
     public GameObject influenceTextPrefab;
     public bool showInfluenceMap = true;
     public List<Influencer> units = new List<Influencer>();
+    public InfluenceLayers visualizationLayer;
     public Color positiveInfluenceColor = Color.green;
     public Color neutralInfluenceColor = Color.grey;
 
@@ -352,7 +353,7 @@ public class InfluenceMap : MonoBehaviour
             Vector2Int position = tile.Key;
             if (position.x >= 0 && position.x < gridWidth && position.y >= 0 && position.y < gridHeight)
             {
-                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength[InfluenceLayers.POSITION], minStrength,
+                float influence = Mathf.Clamp(influenceGrid[position.x, position.y].totalStrength[this.visualizationLayer], minStrength,
                     maxStrength);
                 float normalizedInfluence = influence / maxStrength;
                 Color tileColor;

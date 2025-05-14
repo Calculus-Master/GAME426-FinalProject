@@ -42,6 +42,9 @@ public class GridMap : MonoBehaviour
 
         GenerateGrid();
         SpawnUnits();
+        
+        // Add all "influencer" types to the list
+        this.units = FindObjectsOfType<Influencer>().ToList();
     }
 
     private void GenerateGrid()
