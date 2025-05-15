@@ -1,6 +1,9 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PetInfoDisplay : MonoBehaviour
 {
@@ -9,11 +12,28 @@ public class PetInfoDisplay : MonoBehaviour
     public GameObject panel;
     public TextMeshProUGUI infoText;
 
+    private Coroutine updateCoroutine;
+    private PetEntity currentPet;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         if (panel != null)
             panel.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        this.updateCoroutine = StartCoroutine(UpdateInfoDisplay());
+    }
+
+    private IEnumerator UpdateInfoDisplay()
+    {
+        while (this.panel.activeSelf)
+        {
+            yield return new WaitForSeconds(0.5F);
+            this.ShowPetInfo(this.currentPet);
+        }
     }
 
     public void ShowPetInfo(PetEntity pet)
@@ -22,6 +42,8 @@ public class PetInfoDisplay : MonoBehaviour
         {
             panel.SetActive(true);
             infoText.text = BuildPetInfo(pet);
+
+            this.currentPet = pet;
         }
     }
 
@@ -54,7 +76,10 @@ public class PetInfoDisplay : MonoBehaviour
         var fsm = pet.GetComponent<FiniteStateMachine>();
         if (fsm != null)
         {
-            info += $"\n<b>Current State:</b> {fsm.currentState?.name}\n";
+            string state = fsm.currentState is FSMSuperState s 
+                ? $"{s.name} - {s.GetCurrentSubState(pet.GetInstanceID()).name}" 
+                : fsm.currentState?.name;
+            info += $"\n<b>Current State:</b> {state}\n";
         }
 
         return info;

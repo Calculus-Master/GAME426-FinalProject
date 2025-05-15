@@ -11,7 +11,7 @@ public class PlayingBehaviorTree
 
         Sequence playSequence = new Sequence();
         playSequence.AddChild(new ToyTargetingTask());
-        playSequence.AddChild(new MoveToTargetTask());
+        playSequence.AddChild(new MoveToToyTask());
         playSequence.AddChild(new PlayLeafAction());
 
         Sequence waitSequence = new Sequence();

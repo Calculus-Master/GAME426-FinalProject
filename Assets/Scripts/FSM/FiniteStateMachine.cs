@@ -54,7 +54,7 @@ public class FiniteStateMachine : MonoBehaviour
         {
             if (this.currentState is FSMSuperState super)
             {
-                FSMState sub = super.GetCurrentSubState(this.GetInstanceID());
+                FSMState sub = super.GetCurrentSubState(this.petEntity.GetInstanceID());
                 FSMTransition subTriggered = sub.GetTransitions().FirstOrDefault(t => t.IsTriggered(this));
 
                 if (subTriggered)
@@ -63,7 +63,7 @@ public class FiniteStateMachine : MonoBehaviour
                     if (sub.GetExitAction()) actions.Add(sub.GetExitAction());
                     if (subTriggered.GetAction()) actions.Add(subTriggered.GetAction());
                     if (targetSubState.GetEntryAction()) actions.Add(targetSubState.GetEntryAction());
-                    super.SetCurrentSubState(this.GetInstanceID(), targetSubState);
+                    super.SetCurrentSubState(this.petEntity.GetInstanceID(), targetSubState);
                     
                     this.LogState();
                 }
@@ -78,7 +78,7 @@ public class FiniteStateMachine : MonoBehaviour
 
     private void LogState()
     {
-        string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.GetCurrentSubState(this.GetInstanceID()).name})" : "";
+        string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.GetCurrentSubState(this.petEntity.GetInstanceID()).name})" : "";
         Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
     }
 

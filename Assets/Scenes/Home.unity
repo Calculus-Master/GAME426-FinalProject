@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 7
+  baseStrength: 10
   isMoving: 0
 --- !u!1 &20129173 stripped
 GameObject:
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 3
+  baseStrength: 4
   isMoving: 0
 --- !u!1001 &528181610
 PrefabInstance:
@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 3
+  baseStrength: 4
   isMoving: 0
 --- !u!1 &709971236
 GameObject:
@@ -2198,7 +2198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 3
+  baseStrength: 4
   isMoving: 0
 --- !u!1001 &838472957
 PrefabInstance:
@@ -2319,7 +2319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 3
+  baseStrength: 4
   isMoving: 0
 --- !u!1 &887088016
 GameObject:
@@ -4260,7 +4260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLayer: 1
-  baseStrength: 7
+  baseStrength: 10
   isMoving: 0
 --- !u!1001 &1485916553
 PrefabInstance:

@@ -19,7 +19,7 @@ public class CanPlayCondition : FSMCondition
         float play = im.GetInfluenceAt(InfluenceLayers.PLAYFULNESS, petPos);
         play *= pet.petType.playing;
 
-        Debug.Log($"Testing Playfulness for {pet.name}: {play} ?= {this.playfulnessThreshold}");
+        // Debug.Log($"Testing Playfulness for {pet.name}: {play} ?= {this.playfulnessThreshold}");
         return play >= this.playfulnessThreshold;
     }
 }

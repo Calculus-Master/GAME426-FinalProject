@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveToTargetTask : Task
+public class MoveToToyTask : Task
 {
     private NavMeshAgent agent;
     private bool destinationSet = false;
 
     public override TaskStatus Run(PetEntity pet, ItemToggleManager itemManager)
     {
-        if (pet.CurrentSleepTarget == null)
+        if (pet.CurrentPlayTarget == null)
         {
-            Debug.LogError("MoveToTargetTask: Pet " + pet.name + " has no CurrentSleepTarget set.");
+            Debug.LogError("MoveToToyTask: Pet " + pet.name + " has no CurrentPlayTarget set.");
             return TaskStatus.Failure;
         }
 
@@ -19,20 +19,20 @@ public class MoveToTargetTask : Task
             agent = pet.GetComponent<NavMeshAgent>();
             if (agent == null)
             {
-                Debug.LogError("MoveToTargetTask: Pet " + pet.name + " is missing NavMeshAgent!");
+                Debug.LogError("MoveToToyTask: Pet " + pet.name + " is missing NavMeshAgent!");
                 return TaskStatus.Failure;
             }
         }
 
         if (!destinationSet)
         {
-            agent.SetDestination(pet.CurrentSleepTarget.transform.position);
+            agent.SetDestination(pet.CurrentPlayTarget.transform.position);
             destinationSet = true;
         }
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            ItemAvailability availability = pet.CurrentSleepTarget.GetComponent<ItemAvailability>();
+            ItemAvailability availability = pet.CurrentPlayTarget.GetComponent<ItemAvailability>();
             if (availability != null && availability.IsAvailable())
             {
                 availability.Claim(pet);

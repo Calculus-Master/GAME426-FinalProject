@@ -49,7 +49,7 @@ public class PetSpawnerButton : MonoBehaviour
         // Randomize needs rates
         pet.hungerDecayRate = Random.Range(0.05f, 0.2f);
         pet.thirstDecayRate = Random.Range(0.02f, 0.1f);
-        pet.energyDecayRate = Random.Range(0.05f, 0.15f);
+        pet.energyDecayRate = Random.Range(0.02f, 0.05f);
         pet.socialDecayRate = Random.Range(0.05f, 0.15f);
 
         // Assign random mesh

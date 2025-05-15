@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Finite State Machine/Actions/Socialize")]
 public class SocializeAction : FSMAction
 {
-    private SocializingBehaviorTree socializingBT;
-
     public override void Act(FiniteStateMachine fsm)
     {
         if (fsm.socializingBehaviorTree == null)
@@ -13,10 +11,5 @@ public class SocializeAction : FSMAction
         }
 
         fsm.socializingBehaviorTree.Update(fsm.GetPet(), GameObject.FindObjectOfType<ItemToggleManager>());
-    }
-
-    public void Reset()
-    {
-        socializingBT = null;
     }
 }

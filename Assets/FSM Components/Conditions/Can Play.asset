@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11117c260f4846da90aea3c1b2778bf1, type: 3}
   m_Name: Can Play
   m_EditorClassIdentifier: 
-  playfulnessThreshold: 3
+  playfulnessThreshold: 2
