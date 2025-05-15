@@ -3,21 +3,29 @@ using UnityEngine.AI;
 
 public class MoveToFoodDish : Task
 {
+    /// Cached reference to the food dish GameObject.
     private GameObject foodDish;
+
+    /// Cached reference to the NavMeshAgent.
     private NavMeshAgent agent;
+
+    /// Flag to track if destination has been set.
     private bool destinationSet = false;
 
     public override TaskStatus Run(PetEntity pet, ItemToggleManager itemManager)
     {
-        if (foodDish == null)
-            foodDish = GameObject.Find("food");  // Ensure lowercase "food" matches the scene object name exactly.
-
+        // Find the food dish in the scene if not cached
         if (foodDish == null)
         {
-            Debug.LogError("MoveToFoodDish: Food object not found!");
-            return TaskStatus.Failure;
+            foodDish = GameObject.Find("food");
+            if (foodDish == null)
+            {
+                Debug.LogError("MoveToFoodDish: Food object not found!");
+                return TaskStatus.Failure;
+            }
         }
 
+        // Get the NavMeshAgent component if not cached
         if (agent == null)
         {
             agent = pet.GetComponent<NavMeshAgent>();
@@ -28,22 +36,39 @@ public class MoveToFoodDish : Task
             }
         }
 
+        // Access ItemAvailability to check claims
+        ItemAvailability availability = foodDish.GetComponent<ItemAvailability>();
+
+        if (availability != null && !availability.IsAvailable() && !availability.IsClaimedBy(pet))
+        {
+            // Face the food dish without moving if it's claimed by someone else
+            Vector3 directionToFood = (foodDish.transform.position - pet.transform.position).normalized;
+            directionToFood.y = 0f; // Keep rotation on ground plane
+            if (directionToFood != Vector3.zero)
+            {
+                pet.transform.rotation = Quaternion.LookRotation(directionToFood);
+            }
+
+            return TaskStatus.Running;
+        }
+
         // Set destination if not already set
         if (!destinationSet)
         {
-            Debug.Log("MoveToFoodDish: Setting destination to " + foodDish.transform.position + " for " + pet.name);
             agent.SetDestination(foodDish.transform.position);
             destinationSet = true;
         }
 
-        // Log remaining distance for debugging
-        Debug.Log("MoveToFoodDish: Remaining distance for " + pet.name + ": " + agent.remainingDistance);
-
-        // Check if agent has arrived
+        // Check if agent has arrived at the destination
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            Debug.Log("MoveToFoodDish: " + pet.name + " reached the food dish.");
-            destinationSet = false;  // Reset for future calls
+            if (availability != null && availability.IsAvailable())
+            {
+                availability.Claim(pet);
+                Debug.Log("MoveToFoodDish: " + pet.name + " reached and claimed the food dish.");
+            }
+
+            destinationSet = false; // Reset for future runs
             return TaskStatus.Success;
         }
 

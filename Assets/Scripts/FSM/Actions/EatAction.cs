@@ -12,7 +12,7 @@ public class EatAction : FSMAction
 
     public override void Act(FiniteStateMachine fsm)
 {
-    Debug.Log("EatAction Act() called for " + fsm.GetPet().name);
+    //Debug.Log("EatAction Act() called for " + fsm.GetPet().name);
 
     // Ensure FSM holds the BT instance
     if (fsm.eatingBehaviorTree == null)

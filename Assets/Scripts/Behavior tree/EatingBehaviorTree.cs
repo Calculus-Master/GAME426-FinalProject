@@ -31,7 +31,7 @@ public class EatingBehaviorTree
 
     public TaskStatus Update(PetEntity pet, ItemToggleManager itemManager)
     {
-        Debug.Log("EatingBehaviorTree Update called for " + pet.name);
+        //Debug.Log("EatingBehaviorTree Update called for " + pet.name);
         return root.Run(pet, itemManager);
     }
 }

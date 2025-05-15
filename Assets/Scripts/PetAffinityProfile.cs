@@ -58,6 +58,24 @@ public class PetAffinityProfile : MonoBehaviour
         return false;
     }
 
+        /// Adjusts the affinity toward a target pet by a delta amount, clamped between 0 and 1.
+    public void AdjustAffinity(PetAffinityProfile target, float delta)
+    {
+        for (int i = 0; i < affinities.Count; i++)
+        {
+            if (affinities[i].targetPet == target)
+            {
+                float newValue = Mathf.Clamp01(affinities[i].affinityValue + delta);
+                affinities[i] = new PetAffinity { targetPet = target, affinityValue = newValue };
+                return;
+            }
+        }
+
+        /// If affinity does not exist, add a neutral starting point plus delta.
+        AddAffinity(target, Mathf.Clamp01(0.5f + delta));
+    }
+
+
     private void AddAffinity(PetAffinityProfile target, float value)
     {
         affinities.Add(new PetAffinity { targetPet = target, affinityValue = value });

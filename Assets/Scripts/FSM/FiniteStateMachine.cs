@@ -75,10 +75,11 @@ private string lastLoggedState = "";
     private void LogState()
     {
         string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.currentSubState.name})" : "";
-        Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
+        //Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
             if (subStateInfo != lastLoggedState)
     {
         lastLoggedState = subStateInfo;
+        Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
     }
     }
 
