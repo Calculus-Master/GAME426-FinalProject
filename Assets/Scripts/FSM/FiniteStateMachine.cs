@@ -18,6 +18,8 @@ public class FiniteStateMachine : MonoBehaviour
     // Runtime Behavior Tree Instance for Eating
     [HideInInspector]
     public EatingBehaviorTree eatingBehaviorTree;
+    public DrinkingBehaviorTree drinkingBehaviorTree;
+
 
     private void Start()
     {

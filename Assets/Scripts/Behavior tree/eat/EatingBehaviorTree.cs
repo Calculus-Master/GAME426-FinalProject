@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EatingBehaviorTree
 {
     private Task root;
@@ -18,14 +17,21 @@ public class EatingBehaviorTree
         eatSequence.AddChild(new MoveToFoodDish());
         eatSequence.AddChild(new EatLeafAction());
 
-        // Wait sequence
+        // Wait sequence with TargetName set to "food"
         Sequence waitSequence = new Sequence();
         waitSequence.AddChild(new IsFoodDishAvailable());
-        waitSequence.AddChild(new WaitAction());
 
+        // Create and configure the wait action
+        WaitAction waitForFood = new WaitAction();
+        waitForFood.TargetName = "food";  // << Set the target to "food"
+
+        waitSequence.AddChild(waitForFood);
+
+        // Add both sequences to the root selector
         rootSelector.AddChild(eatSequence);
         rootSelector.AddChild(waitSequence);
 
+        // Assign the constructed tree to the root
         root = rootSelector;
     }
 

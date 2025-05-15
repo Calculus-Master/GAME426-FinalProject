@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class WaitAction : Task
 {
+    /// Name of the target item in the scene (e.g., "food", "water", "pinkrug").
+    public string TargetName = "food";
+
     /// Reference to the target item the pet is waiting for.
     private GameObject targetItem;
 
     public override TaskStatus Run(PetEntity pet, ItemToggleManager itemManager)
     {
-        /// Locate the food dish in the scene.
+        /// Locate the target item in the scene if not already cached.
         if (targetItem == null)
         {
-            targetItem = GameObject.Find("food");
+            targetItem = GameObject.Find(TargetName);
             if (targetItem == null)
             {
-                Debug.LogError("WaitAction: Target item 'food' not found in the scene.");
+                Debug.LogError($"WaitAction: Target item '{TargetName}' not found in the scene.");
                 return TaskStatus.Failure;
             }
         }
@@ -24,7 +27,7 @@ public class WaitAction : Task
         ItemAvailability availability = targetItem.GetComponent<ItemAvailability>();
         if (availability == null)
         {
-            Debug.LogError("WaitAction: No ItemAvailability component found on " + targetItem.name);
+            Debug.LogError($"WaitAction: No ItemAvailability component found on {targetItem.name}.");
             return TaskStatus.Failure;
         }
 
@@ -58,14 +61,16 @@ public class WaitAction : Task
         /// If affinity is high, wait politely.
         if (affinity > 0.85f)
         {
-            Debug.Log("WaitAction: waiting politely.");
+            // Optionally uncomment to reduce log spam.
+            // Debug.Log($"WaitAction: {pet.name} is waiting politely for {occupyingPet.name} to finish with {targetItem.name}.");
             return TaskStatus.Running;
         }
         else
         {
             /// If affinity is low, decrease it further as punishment for being blocked.
             petAffinityProfile.AdjustAffinity(occupyingAffinityProfile, -0.05f);
-            Debug.Log("WaitAction: upset about being blcked.");
+            // Optionally uncomment to reduce log spam.
+            // Debug.Log($"WaitAction: {pet.name} is upset about being blocked by {occupyingPet.name} at {targetItem.name}.");
             return TaskStatus.Running;
         }
     }
