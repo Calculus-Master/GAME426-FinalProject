@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class PetEntity : MonoBehaviour
 {
+
     [Header("Pet Type")] 
     public ActivityWeights petType;
     
@@ -14,6 +15,8 @@ public class PetEntity : MonoBehaviour
     public float hungerDecayRate = 0.15F;
     public float thirstDecayRate = 0.05F;
     public float energyDecayRate = 0.1F;
+    public float socialDecayRate = 0.1F;
+
 
     [Header("Pet Needs Thresholds")] 
     [Tooltip("Values where the pet feels hungry and full")]
@@ -27,6 +30,10 @@ public class PetEntity : MonoBehaviour
     private float _hunger;
     private float _thirst;
     private float _energyLevel;
+    public float _socialNeed;
+    public GameObject CurrentSleepTarget { get; set; }
+    public GameObject CurrentPlayTarget { get; set; }
+
 
     private Coroutine _needsCoroutine;
 
@@ -35,7 +42,8 @@ public class PetEntity : MonoBehaviour
         this._hunger = 1.0F;
         this._thirst = 1.0F;
         this._energyLevel = 1.0F;
-
+        this._socialNeed = 1.0F;
+        
         this._needsCoroutine = StartCoroutine(this.DepleteNeeds());
     }
 
@@ -48,9 +56,13 @@ public class PetEntity : MonoBehaviour
             if(this._hunger > 0) this._hunger -= this.hungerDecayRate;
             if(this._thirst > 0) this._thirst -= this.thirstDecayRate;
             if(this._energyLevel > 0) this._energyLevel -= this.energyDecayRate;
+            if(this._socialNeed > 0) this._socialNeed -= this.socialDecayRate;
+
         }
     }
 
+    public float SocialNeed() => _socialNeed;
+    public void Socialize() => _socialNeed = 1.0F;
     public float Hunger() => this._hunger;
     public float Thirst() => this._thirst;
     public float EnergyLevel() => this._energyLevel;

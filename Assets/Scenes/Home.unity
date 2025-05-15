@@ -6130,18 +6130,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   petType: {fileID: 11400000, guid: cc301235eca0b4ae9813f2a0ab8c39e7, type: 2}
   needsDecayInterval: 5
-  hungerDecayRate: 0.15
-  thirstDecayRate: 0.05
-  energyDecayRate: 0.07
+  hungerDecayRate: 0.05
+  thirstDecayRate: 0.15
+  energyDecayRate: 0.02
+  socialDecayRate: 0.1
   HungerThresholds:
     lower: 0.3
-    upper: 0.7
+    upper: 0.5
   ThirstThresholds:
     lower: 0.1
-    upper: 0.8
+    upper: 0.5
   EnergyThresholds:
     lower: 0.2
     upper: 0.8
+  _socialNeed: 0
 --- !u!114 &4932524674770621490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6157,17 +6159,19 @@ MonoBehaviour:
   petType: {fileID: 11400000, guid: 31406d6558425487bad40d26d57050fb, type: 2}
   needsDecayInterval: 5
   hungerDecayRate: 0.15
-  thirstDecayRate: 0.05
+  thirstDecayRate: 0.005
   energyDecayRate: 0.07
+  socialDecayRate: 0.1
   HungerThresholds:
     lower: 0.2
-    upper: 0.8
+    upper: 0.6
   ThirstThresholds:
     lower: 0.1
     upper: 0.8
   EnergyThresholds:
     lower: 0.2
     upper: 0.8
+  _socialNeed: 0
 --- !u!4 &5373841451783543014
 Transform:
   m_ObjectHideFlags: 0
@@ -6175,7 +6179,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877238653825622046}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.96, y: 0.099, z: 1.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6450,7 +6454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ffe5d58b4f04ac6ac95577b64437a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: {fileID: 11400000, guid: 5776166b3d8394e05a235e8634affc81, type: 2}
+  initialState: {fileID: 11400000, guid: c05342ecab8bf49178582ae3551a203b, type: 2}
   currentState: {fileID: 0}
 --- !u!65 &9014348101942813886
 BoxCollider:

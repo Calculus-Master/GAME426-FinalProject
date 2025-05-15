@@ -6,7 +6,7 @@ using UnityEngine;
 public class DrinkAction : FSMAction
 {
     private DrinkingBehaviorTree drinkingBT;
-    private bool isDrinkingComplete = false;
+    //private bool isDrinkingComplete = false;
     private float timer = 0f;
     private float drinkingDuration = 10f;
 
@@ -27,14 +27,14 @@ public class DrinkAction : FSMAction
             {
                 fsm.GetPet().Drink();
                 Debug.Log("Drinking complete after 10 seconds");
-                isDrinkingComplete = true;
+               // isDrinkingComplete = true;
             }
         }
     }
 
     public void Reset()
     {
-        isDrinkingComplete = false;
+        //isDrinkingComplete = false;
         timer = 0f;
         drinkingBT = null;
     }

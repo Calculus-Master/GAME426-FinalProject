@@ -6,7 +6,7 @@ using UnityEngine;
 public class EatAction : FSMAction
 {
     private EatingBehaviorTree eatingBT;
-    private bool isEatingComplete = false;
+   // private bool isEatingComplete = false;
     private float timer = 0f;
     private float eatingDuration = 10f;
 
@@ -29,7 +29,7 @@ public class EatAction : FSMAction
         {
             fsm.GetPet().Eat();
             Debug.Log("Eating complete after 10 seconds");
-            isEatingComplete = true;
+            //isEatingComplete = true;
         }
     }
 }
@@ -37,7 +37,7 @@ public class EatAction : FSMAction
 
     public void Reset()
     {
-        isEatingComplete = false;
+        //isEatingComplete = false;
         timer = 0f;
         eatingBT = null;
     }

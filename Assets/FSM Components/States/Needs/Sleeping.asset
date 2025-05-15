@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075c790b3795413f801dd749793c215, type: 3}
   m_Name: Sleeping
   m_EditorClassIdentifier: 
-  entryAction: {fileID: 0}
+  entryAction: {fileID: 11400000, guid: 4658d4c46c2dc4950a75ac723115936b, type: 2}
   stateActions:
   - {fileID: 11400000, guid: 4658d4c46c2dc4950a75ac723115936b, type: 2}
   exitAction: {fileID: 0}

@@ -19,6 +19,8 @@ public class FiniteStateMachine : MonoBehaviour
     [HideInInspector]
     public EatingBehaviorTree eatingBehaviorTree;
     public DrinkingBehaviorTree drinkingBehaviorTree;
+    public SleepingBehaviorTree sleepingBehaviorTree;
+    public PlayingBehaviorTree playingBehaviorTree;
 
 
     private void Start()
