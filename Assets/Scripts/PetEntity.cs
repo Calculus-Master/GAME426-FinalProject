@@ -25,6 +25,8 @@ public class PetEntity : MonoBehaviour
     public NeedsThreshold ThirstThresholds = new(0.1F, 0.8F);
     [Tooltip("Values where the pet feels tired and energetic")] 
     public NeedsThreshold EnergyThresholds = new(0.2F, 0.8F);
+    [Tooltip("Values where the pet feels lonely and happy")] 
+    public NeedsThreshold SocialThresholds = new(0.2F, 0.8F);
 
  
     private float _hunger;
@@ -33,7 +35,7 @@ public class PetEntity : MonoBehaviour
     public float _socialNeed;
     public GameObject CurrentSleepTarget { get; set; }
     public GameObject CurrentPlayTarget { get; set; }
-
+    public GameObject CurrentSocialTarget { get; set; }
 
     private Coroutine _needsCoroutine;
 

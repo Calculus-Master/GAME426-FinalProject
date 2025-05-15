@@ -21,7 +21,7 @@ public class FiniteStateMachine : MonoBehaviour
     public DrinkingBehaviorTree drinkingBehaviorTree;
     public SleepingBehaviorTree sleepingBehaviorTree;
     public PlayingBehaviorTree playingBehaviorTree;
-
+    public SocializingBehaviorTree socializingBehaviorTree;
 
     private void Start()
     {

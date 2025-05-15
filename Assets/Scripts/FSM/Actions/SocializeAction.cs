@@ -1,12 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Finite State Machine/Actions/Socialize")]
 public class SocializeAction : FSMAction
 {
+    private SocializingBehaviorTree socializingBT;
+
     public override void Act(FiniteStateMachine fsm)
     {
-        // TODO: Insert behavior tree here
+        if (fsm.socializingBehaviorTree == null)
+        {
+            fsm.socializingBehaviorTree = new SocializingBehaviorTree();
+        }
+
+        fsm.socializingBehaviorTree.Update(fsm.GetPet(), GameObject.FindObjectOfType<ItemToggleManager>());
+    }
+
+    public void Reset()
+    {
+        socializingBT = null;
     }
 }
