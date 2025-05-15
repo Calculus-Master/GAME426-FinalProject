@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Selector : MonoBehaviour
+public class Selector2 : MonoBehaviour
 {
     private Placeable selected = null;
     private GameObject preview = null;

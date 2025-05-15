@@ -15,6 +15,10 @@ public class FiniteStateMachine : MonoBehaviour
     private PetEntity petEntity;
     private InfluenceMap influenceMap;
 
+    // Runtime Behavior Tree Instance for Eating
+    [HideInInspector]
+    public EatingBehaviorTree eatingBehaviorTree;
+
     private void Start()
     {
         this.currentState = this.initialState;
@@ -67,11 +71,18 @@ public class FiniteStateMachine : MonoBehaviour
         actions.Where(a => a).ToList().ForEach(a => a.Act(this));
     }
 
+private string lastLoggedState = "";
     private void LogState()
     {
         string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.currentSubState.name})" : "";
         Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
+            if (subStateInfo != lastLoggedState)
+    {
+        lastLoggedState = subStateInfo;
     }
+    }
+
+
 
     public PetEntity GetPet() => this.petEntity;
     public InfluenceMap GetInfluenceMap() => this.influenceMap;

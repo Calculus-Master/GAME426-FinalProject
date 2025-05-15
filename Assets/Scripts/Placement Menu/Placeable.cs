@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Placeable : MonoBehaviour
 {
-    public Selector selector;
+    public Selector2 selector;
 
     public GameObject prefab;
 

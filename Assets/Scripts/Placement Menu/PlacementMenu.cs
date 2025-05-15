@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlacementMenu : MonoBehaviour
 {
-    public Selector Selector;
+    public Selector2 Selector;
 
     private void Awake()
     {

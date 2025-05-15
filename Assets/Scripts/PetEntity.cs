@@ -22,7 +22,8 @@ public class PetEntity : MonoBehaviour
     public NeedsThreshold ThirstThresholds = new(0.1F, 0.8F);
     [Tooltip("Values where the pet feels tired and energetic")] 
     public NeedsThreshold EnergyThresholds = new(0.2F, 0.8F);
-    
+
+ 
     private float _hunger;
     private float _thirst;
     private float _energyLevel;
