@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae4fc96dc2b42cf9c02c8f5789a0d7a, type: 3}
   m_Name: Is At Least One Need Not Met
   m_EditorClassIdentifier: 
-  needsNotMetConditions:
+  conditions:
   - {fileID: 11400000, guid: 040b65e8501294a4aa639c5379f3e0ef, type: 2}
   - {fileID: 11400000, guid: 7424edc9501df4c148bc59abff49649b, type: 2}
   - {fileID: 11400000, guid: 4c94d8ddbc8964776b5a76fa068505f7, type: 2}

@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
-  m_Name: Decor-Social
+  m_Script: {fileID: 11500000, guid: dbb55bdba595426fbd0c8025cd6c8ebd, type: 3}
+  m_Name: Wander Idly
   m_EditorClassIdentifier: 
-  condition: {fileID: 11400000, guid: 96467772c05224877890f58615153d61, type: 2}
-  action: {fileID: 0}
-  targetState: {fileID: 11400000, guid: 5826dd74b728448ac8eab2a58b32921a, type: 2}

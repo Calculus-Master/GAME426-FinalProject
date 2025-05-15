@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
-  m_Name: Social-Decor
+  m_Script: {fileID: 11500000, guid: 262070e7bc08447f9ff0e28d70b4d9cd, type: 3}
+  m_Name: Socializing - Playing Composite
   m_EditorClassIdentifier: 
-  condition: {fileID: 11400000, guid: 66aad5ce998a145889f6117f43eb426c, type: 2}
-  action: {fileID: 0}
-  targetState: {fileID: 11400000, guid: 35b47306d76374e97afa81eaf02ab91e, type: 2}
+  conditions:
+  - {fileID: 11400000, guid: ac8f9f08f80334b47aef4cf7cc13b44a, type: 2}
+  - {fileID: 11400000, guid: e8abd0a83bff04b529f389c9fb0adeed, type: 2}

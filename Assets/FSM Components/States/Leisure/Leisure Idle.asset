@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075c790b3795413f801dd749793c215, type: 3}
   m_Name: Leisure Idle
   m_EditorClassIdentifier: 
-  entryAction: {fileID: 0}
-  stateActions: []
+  entryAction: {fileID: 11400000, guid: 001bdaa22b0584654b7ae9bd36aad68b, type: 2}
+  stateActions:
+  - {fileID: 11400000, guid: 054d6ec4ebae54c779fc0b9a5e71be0d, type: 2}
   exitAction: {fileID: 0}
   transitions:
-  - {fileID: 11400000, guid: 75ad82b2909a047da9a37cc8d466dda5, type: 2}
-  - {fileID: 11400000, guid: a1ba37e28e10748eb8001249cbb42ef9, type: 2}
   - {fileID: 11400000, guid: dbdee31394e694911b3d5f949b1d96d9, type: 2}
+  - {fileID: 11400000, guid: a1ba37e28e10748eb8001249cbb42ef9, type: 2}

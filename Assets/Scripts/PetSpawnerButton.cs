@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PetSpawnerButton : MonoBehaviour
 {
@@ -6,9 +8,15 @@ public class PetSpawnerButton : MonoBehaviour
     public Transform spawnPoint;
     public Mesh[] availableMeshes;
     public Material[] availableMaterials;
+    public ActivityWeights[] availablePetTypes;
 
     private int spawnCount = 0;
     private const int maxSpawns = 4;
+
+    private List<string> petNameDB = new() // Generated using GPT
+        { "Fluffy", "Spot", "Whiskers", "Buddy", "Max", "Bella", "Charlie", "Lucy", 
+          "Rocky", "Daisy", "Milo", "Luna", "Coco", "Oliver", "Sophie", "Teddy", 
+          "Chloe", "Leo", "Zoe", "Gizmo" };
 
     public void SpawnPet()
     {
@@ -33,7 +41,10 @@ public class PetSpawnerButton : MonoBehaviour
         }
 
         // Assign random name
-        pet.name = "Pet_" + Random.Range(1000, 9999);
+        int nameIndex = Random.Range(0, this.petNameDB.Count);
+        string petName = this.petNameDB[nameIndex];
+        petNameDB.RemoveAt(nameIndex); // Remove to avoid duplicates
+        pet.name = $"Pet({petName})";
 
         // Randomize needs rates
         pet.hungerDecayRate = Random.Range(0.05f, 0.2f);
@@ -60,5 +71,8 @@ public class PetSpawnerButton : MonoBehaviour
                 renderer.material = availableMaterials[Random.Range(0, availableMaterials.Length)];
             }
         }
+        
+        // Assign random pet type
+        pet.petType = this.availablePetTypes[Random.Range(0, this.availablePetTypes.Length)];
     }
 }

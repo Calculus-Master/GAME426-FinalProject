@@ -12,16 +12,18 @@ public class PlayAction : FSMAction
         if (fsm.playingBehaviorTree == null)
         {
             fsm.playingBehaviorTree = new PlayingBehaviorTree();
+            fsm.GetPet().IsDonePlaying = false;
         }
 
         var status = fsm.playingBehaviorTree.Update(fsm.GetPet(), GameObject.FindObjectOfType<ItemToggleManager>());
-
+        
         if (status == TaskStatus.Success)
         {
             timer += Time.deltaTime;
             if (timer >= playDuration)
             {
                 Debug.Log($"{fsm.GetPet().name} completed playing.");
+                fsm.GetPet().IsDonePlaying = true;
                 timer = 0f;
             }
         }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
-  m_Name: Idle-Social
+  m_Name: Social-Idle
   m_EditorClassIdentifier: 
-  condition: {fileID: 11400000, guid: b9b18c3f9a3ad44f9bff6187250ce2b0, type: 2}
+  condition: {fileID: 11400000, guid: ac8f9f08f80334b47aef4cf7cc13b44a, type: 2}
   action: {fileID: 0}
-  targetState: {fileID: 11400000, guid: 5826dd74b728448ac8eab2a58b32921a, type: 2}
+  targetState: {fileID: 11400000, guid: 6d0a9fbf7a9f844519c6a20a133d308f, type: 2}

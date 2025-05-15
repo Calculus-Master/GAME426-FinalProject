@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
   m_Name: Social-Play
   m_EditorClassIdentifier: 
-  condition: {fileID: 11400000, guid: 351f83f63611d4f18a94b86a66a6a5ac, type: 2}
+  condition: {fileID: 11400000, guid: e444ae073aed04d6f91bb83f2b9bbf3d, type: 2}
   action: {fileID: 0}
   targetState: {fileID: 11400000, guid: c05342ecab8bf49178582ae3551a203b, type: 2}

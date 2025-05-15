@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public class PetEntity : MonoBehaviour
@@ -26,8 +27,11 @@ public class PetEntity : MonoBehaviour
     [Tooltip("Values where the pet feels tired and energetic")] 
     public NeedsThreshold EnergyThresholds = new(0.2F, 0.8F);
     [Tooltip("Values where the pet feels lonely and happy")] 
-    public NeedsThreshold SocialThresholds = new(0.2F, 0.8F);
+    public NeedsThreshold SocialThresholds = new(0.5F, 0.8F);
 
+    [Header("Misc")] 
+    [Tooltip("How long the pet spends wandering (minimum)")] 
+    public float minWanderingTime = 5F;
  
     private float _hunger;
     private float _thirst;
@@ -37,7 +41,16 @@ public class PetEntity : MonoBehaviour
     public GameObject CurrentPlayTarget { get; set; }
     public GameObject CurrentSocialTarget { get; set; }
 
+    public bool IsNeedDecayPaused { get; set; } = false;
+    public bool IsDonePlaying { get; set; } = true;
+    
     private Coroutine _needsCoroutine;
+    private NavMeshAgent _navMeshAgent;
+    
+    // Idle wandering
+    public WaypointManager Waypoints { get; set; }
+    public Vector3 CurrentWaypoint { get; set; } = Vector3.zero;
+    public bool CanStopWandering { get; set; } = true;
 
     private void Start()
     {
@@ -47,6 +60,9 @@ public class PetEntity : MonoBehaviour
         this._socialNeed = 1.0F;
         
         this._needsCoroutine = StartCoroutine(this.DepleteNeeds());
+        this._navMeshAgent = GetComponent<NavMeshAgent>();
+        
+        this.Waypoints = FindObjectOfType<WaypointManager>();
     }
 
     private IEnumerator DepleteNeeds()
@@ -55,11 +71,13 @@ public class PetEntity : MonoBehaviour
         {
             yield return new WaitForSeconds(this.needsDecayInterval);
 
-            if(this._hunger > 0) this._hunger -= this.hungerDecayRate;
-            if(this._thirst > 0) this._thirst -= this.thirstDecayRate;
-            if(this._energyLevel > 0) this._energyLevel -= this.energyDecayRate;
-            if(this._socialNeed > 0) this._socialNeed -= this.socialDecayRate;
-
+            if (!this.IsNeedDecayPaused)
+            {
+                if(this._hunger > 0) this._hunger -= this.hungerDecayRate;
+                if(this._thirst > 0) this._thirst -= this.thirstDecayRate;
+                if(this._energyLevel > 0) this._energyLevel -= this.energyDecayRate;
+                if(this._socialNeed > 0) this._socialNeed -= this.socialDecayRate;
+            }
         }
     }
 
@@ -72,6 +90,21 @@ public class PetEntity : MonoBehaviour
     public void Eat() => this._hunger = 1.0F;
     public void Drink() => this._thirst = 1.0F;
     public void Sleep() => this._energyLevel = 1.0F;
+    
+    public NavMeshAgent GetAgent() => this._navMeshAgent;
+
+    public void StartIdleWandering()
+    {
+        this.CanStopWandering = false;
+        StartCoroutine(this.StartWanderingTimer());
+    }
+
+    private IEnumerator StartWanderingTimer()
+    {
+        yield return new WaitForSeconds(this.minWanderingTime);
+        this.CanStopWandering = true;
+        yield return null;
+    }
 }
 
 [Serializable]

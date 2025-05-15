@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -53,7 +54,7 @@ public class FiniteStateMachine : MonoBehaviour
         {
             if (this.currentState is FSMSuperState super)
             {
-                FSMState sub = super.currentSubState;
+                FSMState sub = super.GetCurrentSubState(this.GetInstanceID());
                 FSMTransition subTriggered = sub.GetTransitions().FirstOrDefault(t => t.IsTriggered(this));
 
                 if (subTriggered)
@@ -62,7 +63,7 @@ public class FiniteStateMachine : MonoBehaviour
                     if (sub.GetExitAction()) actions.Add(sub.GetExitAction());
                     if (subTriggered.GetAction()) actions.Add(subTriggered.GetAction());
                     if (targetSubState.GetEntryAction()) actions.Add(targetSubState.GetEntryAction());
-                    super.currentSubState = targetSubState;
+                    super.SetCurrentSubState(this.GetInstanceID(), targetSubState);
                     
                     this.LogState();
                 }
@@ -75,19 +76,11 @@ public class FiniteStateMachine : MonoBehaviour
         actions.Where(a => a).ToList().ForEach(a => a.Act(this));
     }
 
-private string lastLoggedState = "";
     private void LogState()
     {
-        string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.currentSubState.name})" : "";
-        //Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
-            if (subStateInfo != lastLoggedState)
-    {
-        lastLoggedState = subStateInfo;
+        string subStateInfo = this.currentState is FSMSuperState s ? $" (Sub State = {s.GetCurrentSubState(this.GetInstanceID()).name})" : "";
         Debug.Log($"Agent {this.gameObject.name}: Current State = {this.currentState.name}{subStateInfo}");
     }
-    }
-
-
 
     public PetEntity GetPet() => this.petEntity;
     public InfluenceMap GetInfluenceMap() => this.influenceMap;

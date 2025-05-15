@@ -278,6 +278,8 @@ public class InfluenceMap : MonoBehaviour
         // add unit's new strength 
         HashSet<InfluenceNode> open = new HashSet<InfluenceNode>();
         var loc = GridMap.Instance.WorldToGrid(influencer.transform.position);
+        if(loc.x < 0 || loc.x >= gridWidth || loc.y < 0 || loc.y >= gridHeight)
+            return; // Handle objects not in the scene
         var current = influenceGrid[loc.x, loc.y];
         open.Add(current);
         List<InfluenceNode> keys = new List<InfluenceNode> { current };

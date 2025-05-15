@@ -8,7 +8,7 @@ using UnityEngine;
 public class FSMSuperState : FSMState
 {
     public FSMState initialSubState;
-    public FSMState currentSubState;
+    private readonly Dictionary<int, FSMState> _currentSubStates = new();
 
     private void OnEnable()
     {
@@ -17,6 +17,19 @@ public class FSMSuperState : FSMState
 
     private void ResetState(PlayModeStateChange _)
     {
-        this.currentSubState = this.initialSubState;
+        this._currentSubStates.Clear();
+    }
+
+    public FSMState GetCurrentSubState(int instanceID)
+    {
+        if(!this._currentSubStates.ContainsKey(instanceID))
+            this.SetCurrentSubState(instanceID, this.initialSubState);
+        
+        return this._currentSubStates[instanceID];
+    }
+    
+    public void SetCurrentSubState(int instanceID, FSMState state)
+    {
+        this._currentSubStates[instanceID] = state;
     }
 }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8049c1f8c0441db82dcb02b8586ed17, type: 3}
   m_Name: Is Not Thirsty
   m_EditorClassIdentifier: 
-  testForThirsty: 1
+  testForThirsty: 0

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15b36ceb6f16343a89cf1e56443c3eac, type: 3}
-  m_Name: Decor-Play
+  m_Name: Play-Idle
   m_EditorClassIdentifier: 
-  condition: {fileID: 11400000, guid: 351f83f63611d4f18a94b86a66a6a5ac, type: 2}
+  condition: {fileID: 11400000, guid: cb83cd99bb0be48579361201bb6e1ab7, type: 2}
   action: {fileID: 0}
-  targetState: {fileID: 11400000, guid: c05342ecab8bf49178582ae3551a203b, type: 2}
+  targetState: {fileID: 11400000, guid: 6d0a9fbf7a9f844519c6a20a133d308f, type: 2}
