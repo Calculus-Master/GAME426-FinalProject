@@ -46,6 +46,7 @@ public class PetEntity : MonoBehaviour
     
     private Coroutine _needsCoroutine;
     private NavMeshAgent _navMeshAgent;
+    private InfluenceMap _influenceMap;
     
     // Idle wandering
     public WaypointManager Waypoints { get; set; }
@@ -63,6 +64,7 @@ public class PetEntity : MonoBehaviour
         this._navMeshAgent = GetComponent<NavMeshAgent>();
         
         this.Waypoints = FindObjectOfType<WaypointManager>();
+        this._influenceMap = FindObjectOfType<InfluenceMap>();
     }
 
     private IEnumerator DepleteNeeds()
@@ -77,6 +79,15 @@ public class PetEntity : MonoBehaviour
                 if(this._thirst > 0) this._thirst -= this.thirstDecayRate;
                 if(this._energyLevel > 0) this._energyLevel -= this.energyDecayRate;
                 if(this._socialNeed > 0) this._socialNeed -= this.socialDecayRate;
+            }
+            
+            // Energy Level gain from surrounding decor
+            if (this._energyLevel < 1.0F)
+            {
+                float decor = this._influenceMap.GetInfluenceAt(InfluenceLayers.DECOR, this.transform.position);
+                decor *= this.petType.decorations;
+                
+                this._energyLevel += decor / 2F;
             }
         }
     }
