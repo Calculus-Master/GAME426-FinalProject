@@ -15,3 +15,7 @@ AI Algorithms:
 
 Assets Used:
 - Some code was repurposed from Activity 5 and HW2.
+- Animal and decoration/room models are sourced from: 
+https://assetstore.unity.com/packages/3d/characters/animals/animals-free-animated-low-poly-3d-models-260727
+https://assetstore.unity.com/packages/3d/props/furniture/furniture-free-low-poly-3d-models-pack-260522
+https://assetstore.unity.com/packages/3d/props/interior/pandazole-home-interior-low-poly-pack-203033
