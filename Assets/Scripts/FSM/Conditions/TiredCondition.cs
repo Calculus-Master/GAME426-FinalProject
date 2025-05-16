@@ -11,6 +11,6 @@ public class TiredCondition : FSMCondition
     public override bool Test(FiniteStateMachine fsm)
     {
         PetEntity pet = fsm.GetPet();
-        return this.testForTired ? pet.EnergyLevel() <= pet.EnergyThresholds.lower : pet.EnergyLevel() >= pet.EnergyThresholds.upper;
+        return this.testForTired ? pet.EnergyLevel() <= pet.EnergyThresholds.lower : pet.EnergyLevel() > pet.EnergyThresholds.lower;
     }
 }

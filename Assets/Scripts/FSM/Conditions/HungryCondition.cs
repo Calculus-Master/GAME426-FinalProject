@@ -11,6 +11,6 @@ public class HungryCondition : FSMCondition
     public override bool Test(FiniteStateMachine fsm)
     {
         PetEntity pet = fsm.GetPet();
-        return this.testForHungry ? pet.Hunger() <= pet.HungerThresholds.lower : pet.Hunger() >= pet.HungerThresholds.upper;
+        return this.testForHungry ? pet.Hunger() <= pet.HungerThresholds.lower : pet.Hunger() > pet.HungerThresholds.lower;
     }
 }

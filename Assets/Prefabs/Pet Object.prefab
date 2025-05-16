@@ -117,7 +117,7 @@ MonoBehaviour:
     lower: 0.1
     upper: 0.5
   EnergyThresholds:
-    lower: 0.2
+    lower: 0.1
     upper: 0.8
   SocialThresholds:
     lower: 0.2

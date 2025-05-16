@@ -11,6 +11,6 @@ public class ThirstyCondition : FSMCondition
     public override bool Test(FiniteStateMachine fsm)
     {
         PetEntity pet = fsm.GetPet();
-        return this.testForThirsty ? pet.Thirst() <= pet.ThirstThresholds.lower : pet.Thirst() >= pet.ThirstThresholds.upper;
+        return this.testForThirsty ? pet.Thirst() <= pet.ThirstThresholds.lower : pet.Thirst() > pet.ThirstThresholds.lower;
     }
 }
